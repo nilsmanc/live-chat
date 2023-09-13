@@ -10,7 +10,7 @@ const app = () => {
     try {
       const { data } = await axios.get('http://localhost:3000');
 
-      console.log(data);
+      renderMessages(data);
 
       data.forEach((item) => messages.push(item));
     } catch (error) {
@@ -19,6 +19,32 @@ const app = () => {
   };
 
   getMessages();
+
+  const renderMessages = (data) => {
+    let messages = '';
+
+    data.forEach(
+      (message) =>
+        (messages += `
+        <li class="bg-dark p-2 rounded mb-2 d-flex justify-content-between message">
+            <div class="mr-2">
+                <span class="text-info">${message.username}</span>
+                <p class="text-light">${message.text}</p>
+            </div>
+            <span class="text-muted text-right date">
+                ${new Date(message.createdAt).toLocaleString('ru', {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                })}
+            </span>
+        </li>`),
+    );
+
+    msgList.innerHTML = messages;
+  };
 };
 
 app();
