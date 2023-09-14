@@ -20,6 +20,27 @@ const app = () => {
 
   getMessages();
 
+  const handleSendMessage = (text) => {
+    if (!text.trim()) {
+      return;
+    }
+
+    sendMessage({
+      username: usernameInput.value || 'Anonymous',
+      text,
+      createdAt: new Date(),
+    });
+
+    msgInput.value = '';
+  };
+
+  msgInput.addEventListener(
+    'keydown',
+    (e) => e.keyCode === 13 && handleSendMessage(e.target.value),
+  );
+
+  sendBtn.addEventListener('click', () => handleSendMessage(msgInput.value));
+
   const renderMessages = (data) => {
     let messages = '';
 
