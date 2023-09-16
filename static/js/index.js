@@ -66,6 +66,13 @@ const app = () => {
 
     msgList.innerHTML = messages;
   };
+
+  const sendMessage = (message) => socket.emit('sendMessage', message);
+
+  socket.on('recMessage', (message) => {
+    messages.push(message);
+    renderMessages(messages);
+  });
 };
 
 app();
